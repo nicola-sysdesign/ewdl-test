@@ -8,7 +8,7 @@
 git clone --recursive https://github.com/nicola-sysdesign/ewdl-test.git
 mkdir -p ewdl-test/build/
 cd ewdl-test/build/
-cmake ..
+cmake -D CMAKE_BUILD_TYPE=Release ..
 make
 ```
 ## Warning
