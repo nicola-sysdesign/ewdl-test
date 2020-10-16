@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
   for (int iter = 0; iter < 2000; iter++)
   {
     std::this_thread::sleep_until(t0 + iter * std::chrono::microseconds(4000));
-    auto t = std::chrono::steady_clock::now() - t0;
+    auto t = std::chrono::steady_clock::now();
 
     if (iter == 0)
     {
@@ -155,7 +155,7 @@ int main(int argc, char* argv[])
 
     if (iter > 500)
     {
-      auto t_cmd = t - 500 * std::chrono::microseconds(4000);
+      auto t_cmd = t - 500 * std::chrono::microseconds(4000) - t0;
 
       for (int i = 0; i < n_slaves; i++)
       {
