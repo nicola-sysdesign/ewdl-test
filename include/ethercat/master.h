@@ -59,32 +59,7 @@ private:
     return true;
   }
 
-  uint32 prev_DCtime32 = 0;
-  uint32 curr_DCtime32 = 0;
-  uint32 diff_DCtime32 = 0;
-  uint64 DCtime = 0;
-
-  void ec_sync(uint64 ec_DCtime, uint32 cycletime, int32 *t_off)
-  {
-    curr_DCtime32 = (uint32)(0xffffffff & ec_DCtime);
-
-    if (curr_DCtime32 > prev_DCtime32)
-    {
-      diff_DCtime32 = curr_DCtime32 - prev_DCtime32;
-    }
-    else
-    {
-      diff_DCtime32 = (0xffffffff - prev_DCtime32) + curr_DCtime32;
-    }
-
-    prev_DCtime32 = curr_DCtime32;
-
-    DCtime += diff_DCtime32;
-    pi_sync(DCtime, cycletime, t_off);
-  }
-
-
-  void pi_sync(uint64 t_ref, uint64 cycletime, int32 *t_off)
+  void ec_sync(uint64 t_ref, uint64 cycletime, int32 *t_off)
   {
     static int32 integral = 0;
     int32 delta = (t_ref - (cycletime / 2)) % cycletime;
@@ -290,8 +265,8 @@ public:
     }
 
     // OPERATIONAL
-    ec_state = ec_statecheck(0, EC_STATE_OPERATIONAL, EC_TIMEOUTSTATE);
-    print_ec_state(0);
+    // ec_state = ec_statecheck(0, EC_STATE_OPERATIONAL, EC_TIMEOUTSTATE);
+    // print_ec_state(0);
 
     return true;
   }

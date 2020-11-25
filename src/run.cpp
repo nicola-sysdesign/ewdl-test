@@ -42,7 +42,7 @@ void* control_loop(void* arg)
     if ((esa::ewdl::ethercat::to_nsec(t_period) < (ec_master->t_cycle - 100000))
     ||  (esa::ewdl::ethercat::to_nsec(t_period) > (ec_master->t_cycle + 100000)))
     {
-      printf("t_period: %lu", esa::ewdl::ethercat::to_nsec(t_period));
+      printf("t_period: %lu\n", esa::ewdl::ethercat::to_nsec(t_period));
     }
 
     if (iter == 50)
@@ -114,7 +114,9 @@ void* control_loop(void* arg)
         uint16 status_word = ec_master->tx_pdo[slave_idx].status_word;
         int32 position_actual_value = ec_master->tx_pdo[slave_idx].position_actual_value;
 
+        int8 mode_of_operation = esa::ewdl::ethercat::mode_of_operation_t::CYCLIC_SYNCHRONOUS_POSITION;
         int32 target_position = 0.5 * POSITION_STEP_FACTOR * (1 - std::cos(M_PI * esa::ewdl::ethercat::to_sec(t_cmd)));
+        ec_master->rx_pdo[slave_idx].mode_of_operation = mode_of_operation;
         ec_master->rx_pdo[slave_idx].target_position = target_position;
       }
     }
