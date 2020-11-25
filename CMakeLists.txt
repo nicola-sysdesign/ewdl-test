@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(ewdl)
 
+# SOEM
 add_subdirectory(SOEM)
 
 # C++11
@@ -19,8 +20,10 @@ include_directories(
   ${Boost_INCLUDE_DIRS}
 )
 
-add_executable(main src/main.cpp)
-target_link_libraries(main soem ${Boost_LIBRARIES})
+add_executable(run src/run.cpp)
+add_executable(idle src/idle.cpp)
 
+target_link_libraries(run soem ${Boost_LIBRARIES})
+target_link_libraries(idle soem ${Boost_LIBRARIES})
 
 message(STATUS ${CMAKE_MODULE_PATH})

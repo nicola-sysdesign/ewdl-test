@@ -168,6 +168,125 @@ inline void print_ec_state(uint16 slave_idx)
 }
 
 
+inline void print_sm(uint16 slave, int sm)
+{
+  uint16 A = ec_slave[slave].SM[sm].StartAddr;
+  uint16 L = ec_slave[slave].SM[sm].SMlength;
+  uint32 F = ec_slave[slave].SM[sm].SMflags;
+  uint8 Type = ec_slave[slave].SMtype[sm];
+
+  printf("SM%d A:%4.4x L:%4d F:%8.8x Type:%d\n", sm, A, L, F, Type);
+}
+
+
+inline void print_fmmu(uint16 slave, int fmmu)
+{
+  uint32 Ls = ec_slave[slave].FMMU[fmmu].LogStart;
+  uint16 Ll = ec_slave[slave].FMMU[fmmu].LogLength;
+  uint8 Lsb = ec_slave[slave].FMMU[fmmu].LogStartbit;
+  uint8 Leb = ec_slave[slave].FMMU[fmmu].LogEndbit;
+  uint16 Ps = ec_slave[slave].FMMU[fmmu].PhysStart;
+  uint8 Psb = ec_slave[slave].FMMU[fmmu].PhysStartBit;
+  uint8 Ty = ec_slave[slave].FMMU[fmmu].FMMUtype;
+  uint8 Act = ec_slave[slave].FMMU[fmmu].FMMUactive;
+
+  printf("FMMU%d Ls:%.8x Ll:%4.2d Lsb:%d Leb:%d Ps:%.4x Psb:%d Ty:%.2d Act:%.2d\n", fmmu, Ls, Ll, Lsb, Leb, Ps, Psb, Ty, Act);
+}
+
+
+// inline void print_slave_status(const uint16 slave_idx)
+// {
+//   if ((tx_pdo[slave_idx].status_word >> 0) & 0x01)   // Ready to Switch On
+//   {
+//     printf("Slave[%d]: Ready to Switch On\n", slave_idx);
+//   }
+//   if ((tx_pdo[slave_idx].status_word >> 1) & 0x01)   // Switched On
+//   {
+//     printf("Slave[%d]: Switched On\n", slave_idx);
+//   }
+//   if ((tx_pdo[slave_idx].status_word >> 2) & 0x01)   // Operation Enabled
+//   {
+//     printf("Slave[%d]: Operation Enabled\n", slave_idx);
+//   }
+//   if ((tx_pdo[slave_idx].status_word >> 3) & 0x01)   // Fault
+//   {
+//     printf("Slave[%d]: Fault!!\n", slave_idx);
+//   }
+//   if ((tx_pdo[slave_idx].status_word >> 4) & 0x01)   // Voltage Enabled
+//   {
+//     printf("Slave[%d]: Voltage Enabled\n", slave_idx);
+//   }
+//   if ((tx_pdo[slave_idx].status_word >> 5) & 0x01)   // Quick Stop
+//   {
+//     printf("Slave[%d]: Quick Stop Enabled\n", slave_idx);
+//   }
+//   if ((tx_pdo[slave_idx].status_word >> 6) & 0x01)   // Switch On Disabled
+//   {
+//     printf("Slave[%d]: Switch On Disabled\n", slave_idx);
+//   }
+//   if ((tx_pdo[slave_idx].status_word >> 7) & 0x01)   // Warning
+//   {
+//     printf("Slave[%d]: Warning\n", slave_idx);
+//   }
+//
+//   switch (tx_pdo[slave_idx].mode_of_operation_display)
+//   {
+//     case 6:   // HOMING
+//       if ((tx_pdo[slave_idx].status_word >> 10) & 0x01)           // Target Reached
+//       {
+//         printf("Slave[%d]: Target Reached.\n", slave_idx);
+//       }
+//       if ((tx_pdo[slave_idx].status_word >> 11) & 0x01)           // Internal Limit Active
+//       {
+//         printf("Slave[%d]: Internal Limit Active\n", slave_idx);
+//       }
+//       if ((tx_pdo[slave_idx].status_word >> 12) & 0x01)           // Homing Attained
+//       {
+//         printf("Slave[%d]: Homing Attained.\n", slave_idx);
+//       }
+//       if ((tx_pdo[slave_idx].status_word >> 13) & 0x01)           // Homing Error
+//       {
+//         printf("Slave[%d]: Homing Error.\n", slave_idx);
+//       }
+//       break;
+//
+//     case 8:   // CYCLIC SYNCHRONOUS POSITION
+//       if ((tx_pdo[slave_idx].status_word >> 10) & 0x01)           // Target Reached
+//       {
+//         printf("Slave[%d]: Target Reached.\n", slave_idx);
+//       }
+//       if ((tx_pdo[slave_idx].status_word >> 11) & 0x01)           // Internal Limit Active
+//       {
+//         printf("Slave[%d]: Internal Limit Active\n", slave_idx);
+//       }
+//       if ((tx_pdo[slave_idx].status_word >> 13) & 0x01)           // Following Error
+//       {
+//         printf("Slave[%d]: Following Error.\n", slave_idx);
+//       }
+//       break;
+//
+//     case 9:   // CYCLIC SYNCHRONOUS VELOCITY
+//       if ((tx_pdo[slave_idx].status_word >> 10) & 0x01)           // Target Reached
+//       {
+//         printf("Slave[%d]: Target Reached.\n", slave_idx);
+//       }
+//       if ((tx_pdo[slave_idx].status_word >> 11) & 0x01)           // Internal Limit Active
+//       {
+//         printf("Slave[%d]: Internal Limit Active\n", slave_idx);
+//       }
+//       if ((tx_pdo[slave_idx].status_word >> 13) & 0x01)           // Following Error
+//       {
+//         printf("Slave[%d]: Following Error.\n", slave_idx);
+//       }
+//       break;
+//
+//     default:
+//
+//       break;
+//   }
+// }
+
+
 inline void print_operation_mode(uint16 slave, int8 operation_mode)
 {
   switch (operation_mode)
